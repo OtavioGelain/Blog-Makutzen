@@ -2,6 +2,8 @@ import { User } from "../entities/User";
 import { AppDataSource } from "../database/DataSource";
 import { hashedpassword } from "../utils/encryptHash";
 import { ILike } from "typeorm";
+import bcrypt from 'bcrypt'
+import { generateToken } from "../utils/generateToken";
 
 const userRepository = AppDataSource.getRepository(User)
 
@@ -57,5 +59,17 @@ export class UserService{
         }
         userRepository.remove(user)
         return user
+    }
+    static async login(username: string, password: string): Promise<User & {token: string}>{
+        const user = await userRepository.findOneBy({ username })
+        if(!user){
+            throw new Error("Username not found")
+        }
+        const passwordValid = await bcrypt.compare(password, user.password)
+        if(!passwordValid){
+            throw new Error("Incorrect password")
+        }
+        const token = generateToken(user)
+        return {...user, token}
     }
 }

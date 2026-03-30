@@ -38,7 +38,8 @@ export class UserController{
     }
     static async showUserByUsername(req: Request, res: Response): Promise<Response>{
         try{
-            const user = await UserService.showUserByUsername(req.body)
+            const { username } = req.query
+            const user = await UserService.showUserByUsername(String(username))
             if(!user){
                 return res.status(404).json({message: "Username not found"})
             }
@@ -52,7 +53,8 @@ export class UserController{
     }
     static async showUserByName(req: Request, res: Response): Promise<Response>{
         try{
-            const user = await UserService.showUserByName(req.body)
+            const {name} = req.query
+            const user = await UserService.showUserByName(String(name))
             if(!user){
                 return res.status(404).json({message: "Name not found"})
             }
@@ -92,6 +94,19 @@ export class UserController{
                 return res.status(400).json({message: error.message})
             }
             return res.status(500).json({message: "Internal server error"})
+        }
+    }
+    static async login(req: Request, res: Response): Promise<Response>{
+        try{
+            const {username, password} = req.body
+            const userWithToken = await UserService.login(username, password)
+
+            return res.status(200).json({message: "Login successful", userWithToken})
+        }catch(error){
+            if(error instanceof Error){
+                return res.status(400).json({ message: error.message });
+            }
+            return res.status(500).json({ message: 'Internal server error' });
         }
     }
 }
