@@ -13,24 +13,47 @@ export class PostService{
         await postRepository.save(post)
         return post
     }
-    static async showPosts(page: number = 1, limit: number = 10): Promise<Post[]>{
-        const posts = await postRepository.find()
-        return posts
-    }
-    static async showPostById(id: number): Promise<Post | null>{
-        const post = await postRepository.findOneBy({ id })
-        if(!post){
-            throw new Error('Post not found')
-        }
-        return post
-    }
-    static async showPostByTitle(title: string): Promise<Post[]>{
-        const post = await postRepository.find({
-            where: {
-                title: ILike(`%${title}%`)
+    static async showPosts(page: number = 1, limit: number = 10){
+        const [posts, total] = await postRepository.findAndCount({
+            skip: (page - 1) * limit,
+            take: limit,
+            order: {
+                id: "DESC"
             }
         })
-        return post
+        const lastPage = Math.ceil(total / limit)
+
+        return {
+            data: posts,
+            total,
+            page,
+            lastPage,
+            hasNextPage: page < lastPage,
+            hasPreviousPage: page > 1
+        }
+    }
+    
+    static async showPostByTitle(title: string, page: number = 1, limit: number = 10){
+        const [posts, total] = await postRepository.findAndCount({
+            where: {
+                title: ILike(`%${title}%`)
+            },
+            skip: (page - 1) * limit,
+            take: limit,
+            order: {
+                id: "DESC"
+            }
+        })
+        const lastPage = Math.ceil(total / limit) 
+        
+        return {
+            data: posts,
+            total,
+            page,
+            lastPage,
+            hasNextPgae: page < lastPage,
+            hasPreviousPage: page > 1
+        }
     }
     static async updatePost(id: number, postData: Partial<Post>): Promise<Post>{
         const post = await postRepository.findOneBy({ id })
