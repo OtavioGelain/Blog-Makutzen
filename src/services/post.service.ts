@@ -13,7 +13,7 @@ export class PostService{
         await postRepository.save(post)
         return post
     }
-    static async showPosts(): Promise<Post[]>{
+    static async showPosts(page: number = 1, limit: number = 10): Promise<Post[]>{
         const posts = await postRepository.find()
         return posts
     }
