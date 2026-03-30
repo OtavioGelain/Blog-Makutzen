@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm'
 import { Post } from '../entities/Post'
 import { User } from '../entities/User'
 import 'dotenv/config'
+import { Comment } from '../entities/Comment'
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [User, Post],
+    entities: [User, Post, Comment],
     synchronize: false,
     migrations: ['src/database/migrations/*.ts'],
 
