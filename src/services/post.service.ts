@@ -20,7 +20,7 @@ export class PostService{
             order: {
                 id: "DESC"
             }
-        })
+        })  
         const lastPage = Math.ceil(total / limit)
 
         return {

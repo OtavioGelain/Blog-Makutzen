@@ -40,6 +40,7 @@ export class CommentService{
         await commentRepository.save(comment)
         return comment
     }
+    
     static async deleteComment(id: number): Promise<Comment>{
         const comment = await commentRepository.findOneBy({ id })
         if(!comment){
