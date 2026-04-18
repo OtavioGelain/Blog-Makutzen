@@ -1,12 +1,14 @@
 import { Post } from "../entities/Post";
 import { AppDataSource } from "../database/DataSource";
 import { ILike } from "typeorm";
+import { userRepository } from "./user.service";
 
 const postRepository = AppDataSource.getRepository(Post)
 
 export class PostService{
-    static async createPost(postData: Partial<Post>): Promise<Post>{
-        const post = postRepository.create({...postData})
+    static async createPost(postData: Partial<Post>, userid: number): Promise<Post>{
+        const user = await userRepository.findOneBy({id: userid})
+        const post = postRepository.create({...postData, user: user!})
         if(!postData.title){
             throw new Error('Titile is mandatory')
         }   
@@ -15,6 +17,7 @@ export class PostService{
     }
     static async showPosts(page: number = 1, limit: number = 10){
         const [posts, total] = await postRepository.findAndCount({
+            relations: ["user"],
             skip: (page - 1) * limit,
             take: limit,
             order: {

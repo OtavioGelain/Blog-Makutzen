@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 export class PostController{
     static async createPost(req: Request, res: Response): Promise<Response>{
         try{
-            const post = await PostService.createPost(req.body)
+            const post = await PostService.createPost(req.body, (req as any).user.id)
             return res.status(200).json({message: "Post created"})
         }catch(error){
             if(error instanceof Error){
@@ -18,7 +18,7 @@ export class PostController{
             const page = Number(req.query.page) || 1
             const limit = Number(req.query.limit) || 10
             
-            const result = PostService.showPosts(page, limit)
+            const result = await PostService.showPosts(page, limit)
             return res.status(200).json(result)
         }catch(error){
             if(error instanceof Error){

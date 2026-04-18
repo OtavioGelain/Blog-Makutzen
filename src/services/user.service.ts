@@ -5,7 +5,7 @@ import { ILike } from "typeorm";
 import bcrypt from 'bcrypt'
 import { generateToken } from "../utils/generateToken";
 
-const userRepository = AppDataSource.getRepository(User)
+export const userRepository = AppDataSource.getRepository(User)
 
 export class UserService{
     static async createUser(userData: Partial<User>): Promise<User>{
