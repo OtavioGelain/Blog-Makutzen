@@ -1,6 +1,6 @@
 import { Post } from "../entities/Post";
 import { AppDataSource } from "../database/DataSource";
-import { ILike } from "typeorm";
+import { ILike, Like } from "typeorm";
 import { userRepository } from "./user.service";
 
 const postRepository = AppDataSource.getRepository(Post)
