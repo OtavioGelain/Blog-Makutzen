@@ -3,7 +3,7 @@ import { AppDataSource } from "../database/DataSource";
 import { ILike, Like } from "typeorm";
 import { userRepository } from "./user.service";
 
-const postRepository = AppDataSource.getRepository(Post)
+export const postRepository = AppDataSource.getRepository(Post)
 
 export class PostService{
     static async createPost(postData: Partial<Post>, userid: number): Promise<Post>{

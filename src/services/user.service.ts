@@ -22,7 +22,11 @@ export class UserService{
         return users
     }
     static async showUserById(id: number): Promise<User>{
-        const user = await userRepository.findOneBy({ id })
+        const user = await userRepository.findOne({ 
+            where: { id },
+            relations: ["posts", "comments"]
+         })
+
         if(!user){
             throw new Error('User not found')
         }
