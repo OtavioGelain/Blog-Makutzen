@@ -26,6 +26,21 @@ export class PostController{
             }
             return res.status(500).json({message: "Internal server error"})
         }
+    }
+    static async showPostById(req: Request, res: Response): Promise<Response>{
+        try{
+            const id = Number(req.params.id)
+            const post = await PostService.showPostById(id)
+            if(!post){
+                return res.status(404).json({message: "Post not found"})
+            }
+            return res.status(200).json(post)
+        }catch(error){
+            if(error instanceof Error){
+                return res.status(400).json({message: error.message})
+            }
+            return res.status(500).json({message: "Internal server error"})
+        }
     } static async showPostByTitle(req: Request, res: Response): Promise<Response>{
         try{
             const page = Number(req.query.page) || 1

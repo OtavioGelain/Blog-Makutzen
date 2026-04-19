@@ -35,6 +35,16 @@ export class PostService{
             hasPreviousPage: page > 1
         }
     }
+    static async showPostById(id: number): Promise<Post>{
+        const post = await postRepository.findOne({ 
+            where: { id },
+            relations: ["user", "comments.user"]
+         })
+        if(!post){
+            throw new Error('Post not found')
+        }
+        return post
+    }
     
     static async showPostByTitle(title: string, page: number = 1, limit: number = 10){
         const [posts, total] = await postRepository.findAndCount({

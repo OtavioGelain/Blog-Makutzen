@@ -4,8 +4,8 @@ import { Comment } from "../entities/Comment";
 const commentRepository = AppDataSource.getRepository(Comment)
 
 export class CommentService{
-    static async createComment(dataComment: Partial<Comment>): Promise<Comment>{
-        const comment = commentRepository.create({ ...dataComment })
+    static async createComment({ text, userId, postId }: { text: string; userId: number; postId: number }): Promise<Comment>{
+        const comment = commentRepository.create({ text, user: { id: userId }, post: { id: postId }, createdAt: new Date() })
         if(!comment.text){
             throw new Error("Need text")
         }

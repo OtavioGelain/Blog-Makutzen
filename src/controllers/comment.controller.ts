@@ -4,7 +4,13 @@ import { CommentService } from "../services/comment.service";
 export class CommentController{
     static async createComment(req: Request, res: Response): Promise<Response>{
         try{
-            const comment = await CommentService.createComment(req.body)
+            const postId = Number(req.params.id)
+            const userId = (req as any).user.id
+            const {text} = req.body
+            if(!userId){
+                throw new Error("User not authenticated")
+            }
+            const comment = await CommentService.createComment({ text, userId, postId })
             return res.status(200).json(comment)
         }catch(error){
             if(error instanceof Error){

@@ -17,25 +17,13 @@ export class UserService{
         await userRepository.save(user)
         return user
     }
-    static async showUser(page: number = 1, limit: number = 10) {
-    const [users, total] = await userRepository.findAndCount({
-        skip: (page - 1) * limit,
-        take: limit,
-        order: {
-            id: "DESC"
-        }
-    })
-
-        return {
-            data: users,
-            pagination: {
-                page,
-                limit,
-                total,
-                totalPages: Math.ceil(total / limit)
-            }
-        }
-}
+    static async showUser(page: number = 1, limit: number = 10): Promise<User[]>{
+        const [users, total] = await userRepository.findAndCount({
+            skip: (page - 1) * limit,
+            
+        })
+        return users
+    }
     static async showUserById(id: number): Promise<User>{
         const user = await userRepository.findOne({ 
             where: { id },
