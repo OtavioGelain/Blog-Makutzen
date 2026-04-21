@@ -11,6 +11,6 @@ AppDataSource.initialize()
         console.log('Error during inicialization Database')
     })
 
-app.listen(PORT, () => {
-    console.log('Server running on port 3000')
+    app.listen(PORT, () => {
+        console.log('Server running on port 3000')
 })
