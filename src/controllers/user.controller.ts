@@ -53,6 +53,22 @@ export class UserController{
             return res.status(500).json({message: "Internal server error"})
         }
     }
+    static async showPostsByUserId(req: Request, res: Response): Promise<Response>{
+        try{
+            const id = Number(req.params.id)
+            const { page, limit } = req.query
+            const postsByUser = await UserService.showPostsByUserId(id, Number(page), Number(limit))
+            if(!id){
+                return res.status(404).json({message: "User not found"})
+            }
+            return res.status(200).json(postsByUser)
+        }catch(error){
+            if(error instanceof Error){
+                return res.status(400).json({message: error.message})
+            }
+            return res.status(500).json({message: "Internal server error"})
+        }
+    }
     static async showUserByUsername(req: Request, res: Response): Promise<Response>{
         try{
             const { username } = req.query
