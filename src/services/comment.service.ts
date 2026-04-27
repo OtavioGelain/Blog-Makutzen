@@ -1,7 +1,7 @@
 import { AppDataSource } from "../database/DataSource";
 import { Comment } from "../entities/Comment";
 
-const commentRepository = AppDataSource.getRepository(Comment)
+export const commentRepository = AppDataSource.getRepository(Comment)
 
 export class CommentService{
     static async createComment({ text, userId, postId }: { text: string; userId: number; postId: number }): Promise<Comment>{
