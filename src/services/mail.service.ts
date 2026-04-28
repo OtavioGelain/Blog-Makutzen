@@ -15,5 +15,13 @@ export class MailService{
         .then((response) => console.log("Email enviado com sucesso", response))
         .catch((error) => console.log("Erro ao enviar o email", error))
     }
-    
+    static async sendNotificationForAll(message: string){
+        const users = await userRepository.find()
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: users.map((u) => u.email),
+            subject: "Notificação",
+            html: `<p>${message}</p>`
+        })
+    }
 }

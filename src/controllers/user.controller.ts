@@ -1,11 +1,19 @@
-import { UserService } from "../services/user.service";
+import { MailService } from "../services/mail.service";
+import { userRepository, UserService } from "../services/user.service";
 import { Request, Response } from "express";
 
 export class UserController{
     static async createUser(req: Request, res: Response): Promise<Response>{
         try{
+            const { email } = req.body
+            const userExists = await userRepository.findOneBy({ email } )
+            if(userExists){
+                return res.status(400).json({message: "Email already exists"})
+            }
             const user = await UserService.createUser(req.body)
-            return res.status(200).json({message: "User created", user})
+            
+            await MailService.sendWelcomeEmail(user)
+            return res.status(200).json({message: "User created"})
         }catch(error){
             if(error instanceof Error){
                 return res.status(400).json({message: error.message})

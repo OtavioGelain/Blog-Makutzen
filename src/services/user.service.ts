@@ -15,7 +15,7 @@ export class UserService{
     static async createUser(userData: Partial<User>): Promise<User>{
         const hashedPassword = await hashedpassword(userData.password!)
         const user = userRepository.create({...userData, password: hashedPassword})
-        if(!user.name || !user.password || !user.username){
+        if(!user.name || !user.password || !user.username || !user.email){
             throw new Error('All fields are mandatory')
         }
         await userRepository.save(user)
@@ -104,7 +104,7 @@ export class UserService{
         userRepository.remove(user)
         return user
     }
-    static async login(username: string, password: string): Promise<User & {token: string}>{
+    static async login(username: string, password: string): Promise<{token: string, user: Partial<User>}>{
         const user = await userRepository.findOneBy({ username })
         if(!user){
             throw new Error("Username not found")
@@ -114,6 +114,14 @@ export class UserService{
             throw new Error("Incorrect password")
         }
         const token = generateToken(user)
-        return {...user, token}
+        return { 
+            token,
+            user: {
+                id: user.id,
+                name: user.name,
+                username: user.username,
+                email: user.email
+            }
+        } 
     }
 }
