@@ -15,6 +15,9 @@ export class User {
 
     @Column()
     password: string
+
+    @Column()
+    email: string
     
     @Column({ nullable: true })
     profileUrl: string
