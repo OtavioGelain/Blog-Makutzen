@@ -24,4 +24,12 @@ export class MailService{
             html: `<p>${message}</p>`
         })
     }
+    static async sendEmailForOnePerson(email: string, message: string){
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: "Aviso!!",
+            html: `<p>${message}</p>`
+        })
+    }
 }
