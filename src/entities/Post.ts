@@ -13,6 +13,9 @@ export class Post {
     @Column()
     description: string
 
+    @Column({ nullable: true})
+    likes: number
+
     @CreateDateColumn()
     createdAt: Date
 
