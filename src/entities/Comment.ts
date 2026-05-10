@@ -13,9 +13,6 @@ export class Comment{
     @CreateDateColumn()
     createdAt: Date
 
-    @Column({ nullable: true })
-    likes: number
-
     @ManyToOne(() => User, user => user.comments)
     user: User
 

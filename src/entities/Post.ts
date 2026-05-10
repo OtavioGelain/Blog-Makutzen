@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, OneToMany, CreateDateColumn } from 'typeorm'
 import { User } from './User'
 import { Comment } from './Comment'
+import { Like } from './Likes'
 
 @Entity()
 export class Post {
@@ -13,9 +14,6 @@ export class Post {
     @Column()
     description: string
 
-    @Column({ nullable: true})
-    likes: number
-
     @CreateDateColumn()
     createdAt: Date
 
@@ -24,4 +22,7 @@ export class Post {
 
     @OneToMany(() => Comment, comment => comment.post)
     comments: Comment[]
+
+    @OneToMany(() => Like, (like) => like.post)
+    likes: Like[];
 }

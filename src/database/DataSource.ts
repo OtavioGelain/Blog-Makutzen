@@ -4,6 +4,7 @@ import { Post } from '../entities/Post'
 import { User } from '../entities/User'
 import 'dotenv/config'
 import { Comment } from '../entities/Comment'
+import { Like } from '../entities/Likes'
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [User, Post, Comment],
+    entities: [User, Post, Comment, Like],
     synchronize: false,
     migrations: ['src/database/migrations/*.ts'],
 
