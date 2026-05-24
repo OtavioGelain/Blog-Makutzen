@@ -12,7 +12,7 @@ services:
       DATABASE_URL: postgres://postgres:1234@postgres:5432/kanban
       REDIS_HOST: redis
     volumes:
-      - .:/app
+      - .:/app:Z
       - /app/node_modules
 
   postgres:
