@@ -1,4 +1,20 @@
-services: 
+
+services:
+  app:
+    build: .
+    container_name: blog-makutzen-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DATABASE_URL: postgres://postgres:1234@postgres:5432/kanban
+      REDIS_HOST: redis
+    volumes:
+      - .:/app
+      - /app/node_modules
+
   postgres:
     image: postgres:15
     container_name: blog-makutzen-db
