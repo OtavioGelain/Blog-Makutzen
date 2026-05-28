@@ -1,15 +1,25 @@
 import { userRepository, UserService } from "../../services/user.service";
-import { describe , expect, it } from "@jest/globals"
+import { afterAll, beforeAll, describe, expect, it } from "@jest/globals"
 import { makeUser } from "../factories/userFactory"
+import { AppDataSource } from "../../database/DataSource";
 
 describe("UserService",  () => {
+    beforeAll(async () => {
+        if (!AppDataSource.isInitialized) {
+            await AppDataSource.initialize()
+        }
+    })
+
+    afterAll(async () => {
+        await AppDataSource.destroy()
+    })
+
     it("should create user", async () => {
         const fakeUser = makeUser()
-        UserService.createUser(fakeUser)
+        await UserService.createUser(fakeUser)
         const databaseUser =  await userRepository.findOneBy({
             email: fakeUser.email
         })
-        expect(databaseUser).toBeDefined()
-        
+        expect(databaseUser).toBeDefined()  
     })
 })
