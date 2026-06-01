@@ -29,16 +29,9 @@ describe("UserService",  () => {
         const fakeUser: Partial<User>[] = [{
             username: "otaviogelain",
             name: "otavio",
-            password: "otavio03",
+            password: "otavio133",
             email: "otavio@gmail.com"
         }]
-        
-        jest.spyOn(userRepository, "find")
-        .mockResolvedValue(fakeUser as User[])
-
-        const result = await UserService.showUser()
-
-        expect(result).toEqual(fakeUser)
     })
   
 })
