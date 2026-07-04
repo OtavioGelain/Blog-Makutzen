@@ -1,37 +1,31 @@
 import { userRepository, UserService } from "../../services/user.service";
-import { afterAll, beforeAll, describe, expect, it, jest } from "@jest/globals"
-import { makeUser } from "../factories/userFactory"
-import { AppDataSource } from "../../database/DataSource";
-import { User } from "../../entities/User";
-
+import { afterAll, beforeAll, beforeEach, describe, expect, it, jest } from "@jest/globals"
+import * as hashUtils from "../../utils/encryptHash"
 
 
 describe("UserService",  () => {
-    beforeAll(async () => {
-        if (!AppDataSource.isInitialized) {
-            await AppDataSource.initialize()
-        }
-    })
+    let userService
 
-    afterAll(async () => {
-        await AppDataSource.destroy()
-    })
-
-    it("should create user", async () => {
-        const fakeUser = makeUser()
-        await UserService.createUser(fakeUser)
-        const databaseUser =  await userRepository.findOneBy({
-            email: fakeUser.email
-        })
-        expect(databaseUser).toBeDefined()  
-    })
-    it("Should show users", async () => {
-        const fakeUser: Partial<User>[] = [{
-            username: "otaviogelain",
+    
+    userService = new UserService()
+    it("Deve criar um usuario", async () => {
+        let fakeUser = {
+            username: "otavio",
             name: "otavio",
-            password: "otavio133",
-            email: "otavio@gmail.com"
-        }]
+            password: "otavio123",
+            email: "teste@gmail.com"
+        }
+        jest.spyOn(hashUtils, "hashedpassword").mockResolvedValue("hashedPassword")
+        jest.spyOn(userRepository, "create").mockImplementation(
+            (data) => data as any
+        )
+        jest.spyOn(userRepository, "save").mockResolvedValue({} as any)
+
+        const user = await UserService.createUser(fakeUser)
+        
+        expect(user.name).toBe("otavio")
+        expect(user.password).toBe("hashedPassword")
+        expect(userRepository.save).toHaveBeenCalled()
     })
-  
+
 })
