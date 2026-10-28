@@ -1,0 +1,25 @@
+{
+  "capturado_em_utc": "2026-10-28T19:08:36.275955+00:00",
+  "endpoint": "repos/OtavioGelain/Blog-Makutzen/environments/staging",
+  "resultado": {
+    "id": 25609824859,
+    "node_id": "EN_kwDORxaWDM8AAAAF9nbqWw",
+    "name": "staging",
+    "url": "https://api.github.com/repos/OtavioGelain/Blog-Makutzen/environments/staging",
+    "html_url": "https://github.com/OtavioGelain/Blog-Makutzen/deployments/activity_log?environments_filter=staging",
+    "created_at": "2026-10-28T19:05:47Z",
+    "updated_at": "2026-10-28T19:05:47Z",
+    "can_admins_bypass": true,
+    "protection_rules": [
+      {
+        "id": 70458108,
+        "node_id": "GA_kwDORxaWDM4EMxr8",
+        "type": "branch_policy"
+      }
+    ],
+    "deployment_branch_policy": {
+      "protected_branches": true,
+      "custom_branch_policies": false
+    }
+  }
+}

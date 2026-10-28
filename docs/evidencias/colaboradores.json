@@ -1,0 +1,17 @@
+{
+  "capturado_em_utc": "2026-10-28T19:08:37.145005+00:00",
+  "endpoint": "repos/OtavioGelain/Blog-Makutzen/collaborators",
+  "resultado": [
+    {
+      "login": "OtavioGelain",
+      "permissions": {
+        "admin": true,
+        "maintain": true,
+        "pull": true,
+        "push": true,
+        "triage": true
+      },
+      "role_name": "admin"
+    }
+  ]
+}
