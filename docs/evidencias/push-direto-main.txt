@@ -1,0 +1,19 @@
+Data UTC: 2026-10-28T19:06:23.681936+00:00
+Repositório: https://github.com/OtavioGelain/Blog-Makutzen
+Usuário autenticado: OtavioGelain
+Commit vazio candidato: a32b9421e5d1f474943f70a2db7d4254ef39b38c
+main antes: 4031a5ade212656fb39562353bde9c54afe576fc
+Comando: git push origin HEAD:main
+Código de saída: 1
+
+remote: error: GH006: Protected branch update failed for refs/heads/main.
+remote:
+remote: - Changes must be made through a pull request.
+To https://github.com/OtavioGelain/Blog-Makutzen.git
+ ! [remote rejected] HEAD -> main (protected branch hook declined)
+error: failed to push some refs to 'https://github.com/OtavioGelain/Blog-Makutzen.git'
+
+main depois: 4031a5ade212656fb39562353bde9c54afe576fc
+main preservada: True
+
+Nota de formatação: espaços no fim das linhas removidos; mensagens e códigos preservados.

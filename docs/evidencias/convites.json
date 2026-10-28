@@ -1,0 +1,13 @@
+{
+  "capturado_em_utc": "2026-10-28T19:08:37.699107+00:00",
+  "endpoint": "repos/OtavioGelain/Blog-Makutzen/invitations",
+  "resultado": [
+    {
+      "created_at": "2026-10-28T19:07:07Z",
+      "html_url": "https://github.com/OtavioGelain/Blog-Makutzen/invitations",
+      "id": 340232931,
+      "login": "sadalls17",
+      "permissions": "write"
+    }
+  ]
+}
